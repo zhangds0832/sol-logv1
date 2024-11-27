@@ -1,0 +1,15 @@
+{
+  "buySell": "买",
+  "signature": "5FpgGC9bcU6je6t7Yi5p7AiVvpemRyJqeDqCaXdPzFizHzzKGbmx6Jtd4gPu9uJRfQXn82BZBwJmVPttxxv1L9aK",
+  "time": "2024/11/27 18:02:16",
+  "solt": 303911160,
+  "remark": "第一次购买币，注意币可能不是最新发布的"
+},
+{
+  "buySell": "买",
+  "signature": "5FpgGC9bcU6je6t7Yi5p7AiVvpemRyJqeDqCaXdPzFizHzzKGbmx6Jtd4gPu9uJRfQXn82BZBwJmVPttxxv1L9aK",
+  "SPLToken": "Transaction not found",
+  "time": "2024/11/27 18:02:16",
+  "solt": 303911160,
+  "remark": "第一次购买币，注意币可能不是最新发布的"
+},
