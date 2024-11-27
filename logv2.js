@@ -24,13 +24,22 @@ const reTime = () => {
 
 const saveFile = (objRes, fineName) => {
     const jsonString = JSON.stringify(objRes, null, 2) + ',\n'; // 追加逗号和换行符，方便后续添加内容
-    // 将 Set 转换为数组并写入文件
-    fs.appendFile(fineName, jsonString, (err) => {
+    fs.readFile(fineName, 'utf8', (err, data) => {
         if (err) {
-            console.error('Error writing to file', err);
-        } else {
-            console.log('Signatures written to signatures.txt');
+            console.error('Error reading file', err);
+            return;
         }
+    
+        // 将新内容放在现有内容之前
+        const updatedContent = jsonString + '\n' + data;
+    
+        fs.writeFile(fineName, updatedContent, 'utf8', (err) => {
+            if (err) {
+                console.error('Error writing to file', err);
+            } else {
+                console.log('Signatures written to signatures.txt');
+            }
+        });
     });
 }
 
@@ -48,7 +57,7 @@ const init = async () => {
         if (logs.logs.length > 15) {
 
             let obj = {
-                buySell: "未知",
+                buySell: "unknown",
                 signature: logs.signature,
                 SPLToken: "",
                 time: reTime(),
@@ -58,8 +67,8 @@ const init = async () => {
 
             // 2.第二层过滤，如果是归零，清库
             if (logs.logs.includes("Program log: Instruction: CloseAccount") && logs.logs.includes("Program log: Instruction: Sell")) {
-                obj.remark = "已清仓，归零";
-                obj.buySell = "卖";
+                obj.remark = "zero";
+                obj.buySell = "Sell";
 
                 saveFile(obj, "0000.txt");
                 return
@@ -68,8 +77,8 @@ const init = async () => {
             // 3.第三层： 新币购买，第一次购买
             if (logs.logs.includes("Program log: Create") && logs.logs.includes("Program log: Initialize the associated token account") && logs.logs.includes("Program log: Instruction: Buy")) {
                 
-                obj.remark = "第一次购买币，注意币可能不是最新发布的";
-                obj.buySell = "买";
+                obj.remark = "First-time buyer";
+                obj.buySell = "Buy";
 
 
                 obj.SPLToken = await getSPLTokenAddress(logs.signature)
