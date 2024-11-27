@@ -67,7 +67,7 @@ const init = async () => {
 
             // 2.第二层过滤，如果是归零，清库
             if (logs.logs.includes("Program log: Instruction: CloseAccount") && logs.logs.includes("Program log: Instruction: Sell")) {
-                obj.remark = "zero";
+                obj.remark = "zero zero zero";
                 obj.buySell = "Sell";
 
                 saveFile(obj, "0000.txt");
