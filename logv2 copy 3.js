@@ -9,8 +9,7 @@ const WSS_ENDPOINT = 'wss://hidden-cool-putty.solana-mainnet.quiknode.pro/d11545
 const HTTP_ENDPOINT = 'https://hidden-cool-putty.solana-mainnet.quiknode.pro/d11545d703ec2dba88fb9bdbb2e03381f1786c3e'; // replace with your URL
 
 
-// const monitor_address = "ASxMiMb1AJGTU4AduPNB2CGqT1TiDqWkLvy7oCUnzw5x";
-const monitor_address = "JD25qVdtd65FoiXNmR89JjmoJdYk9sjYQeSTZAALFiMy";
+const monitor_address = "ASxMiMb1AJGTU4AduPNB2CGqT1TiDqWkLvy7oCUnzw5x";
 
 // 与solana 建立联系
 const solanaConnection = new Connection(HTTP_ENDPOINT, { wsEndpoint: WSS_ENDPOINT }, "confirmed");
@@ -95,43 +94,37 @@ const init = async () => {
 
 
 const getSPLTokenAddress = async (signature) => {
+    let transaction =  await solanaConnection.getParsedTransaction(signature, {
+        maxSupportedTransactionVersion:0,
+        commitment:"confirmed"
+    });
 
-    return new Promise(async (resolve, reject) =>{
-        let transaction =  await solanaConnection.getParsedTransaction(signature, {
-            maxSupportedTransactionVersion:0,
-            commitment:"confirmed"
-        });
-    
-        // 1. accountKeys 交易相关的账户公钥
-        // 2. instructions 交易中要执行的指令
-        console.log("accountKeys =>",transaction.transaction.message.accountKeys.length)
-        console.log("instructions =>",transaction.transaction.message.instructions.length)
-    
-        // console.log("accountKeys =>",transaction.transaction.message.accountKeys)
-        // console.log("instructions =>",transaction.transaction.message.instructions)
-    
-    
-        if(transaction && transaction.transaction.message.accountKeys.length >= 13 && transaction.transaction.message.instructions.length >= 3){
-            console.log("发现新的openbookid");
-            console.log("交易hash值 =>", signature);
-            console.log("创建者 =>", transaction.transaction.message.accountKeys[0].pubkey.toString());
-            
-            let transactionMeta = transaction.transaction.message.instructions;
-            let accountKeys = [];
-    
-            transactionMeta.forEach(item =>{
-                if(item.accounts){
-                    const keys = item.accounts.map(pubkey => pubkey.toBase58());
-                    accountKeys = accountKeys.concat(keys);
-                }
-            })
-            console.log("accountKeys all =>", accountKeys);
-            resolve(accountKeys[2]);
-        }
+    // 1. accountKeys 交易相关的账户公钥
+    // 2. instructions 交易中要执行的指令
+    console.log("accountKeys =>",transaction.transaction.message.accountKeys.length)
+    console.log("instructions =>",transaction.transaction.message.instructions.length)
 
-        resolve("Not SPL Token!")
-    })
+    // console.log("accountKeys =>",transaction.transaction.message.accountKeys)
+    // console.log("instructions =>",transaction.transaction.message.instructions)
 
+
+    if(transaction && transaction.transaction.message.accountKeys.length >= 13 && transaction.transaction.message.instructions.length >= 3){
+        console.log("发现新的openbookid");
+        console.log("交易hash值 =>", signature);
+        console.log("创建者 =>", transaction.transaction.message.accountKeys[0].pubkey.toString());
+        
+        let transactionMeta = transaction.transaction.message.instructions;
+        let accountKeys = [];
+
+        transactionMeta.forEach(item =>{
+            if(item.accounts){
+                const keys = item.accounts.map(pubkey => pubkey.toBase58());
+                accountKeys = accountKeys.concat(keys);
+            }
+        })
+
+        console.log("accountKeys all =>", accountKeys);
+    }
 }
 // getSPLTokenAddress("JzvcCruEz3jmLS1oXZZtE6yWAV7Ek6E8Q7kHmpaxNzpEkFCRYz4p8WgPchjPB57gJq4caEApVGGY6HUiKLSNCD7");
 init();
