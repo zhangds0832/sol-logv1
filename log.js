@@ -82,7 +82,7 @@ const getTXDetal = async (obj) => {
                 time: reTime(),
                 solt:obj.slot,
                 stateBuySell:obj.stateBuySell,
-                pump:``
+                pump:`https://pump.fun/coin/${instruction.parsed.info.mint}`
             }
 
             console.log("SPL =>", objRes);
