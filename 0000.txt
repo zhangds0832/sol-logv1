@@ -1,0 +1,14 @@
+{
+  "buySell": "卖",
+  "signature": "1nLZz7j3FsRSKAQyWHmC3JdqGN895g7FNEKPR2VsA1qAzBTU4cK6uJ3fSuwkpC8JusmwwjQsn36uqsSPHuc6yCz",
+  "time": "2024/11/27 16:30:03",
+  "solt": 303898252,
+  "remark": "已清仓，归零"
+},
+{
+  "buySell": "卖",
+  "signature": "3WC5n2KgeucdLhNwjnzjdSJzjsb3NTNypZ5N6gqon1d6Ln4fabk8YNVWw9RxVPo6iyWDivHV3xFFn6MkkkRsZuBG",
+  "time": "2024/11/27 16:30:11",
+  "solt": 303898272,
+  "remark": "已清仓，归零"
+},
