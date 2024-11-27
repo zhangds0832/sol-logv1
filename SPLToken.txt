@@ -16,3 +16,5 @@
   "time": "2024/11/27 10:14:42",
   "stateBuySell": "Buy"
 },
+
+/var/www/ng-cf/html/sol/sol-logv1/SPLToken.txt
